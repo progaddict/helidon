@@ -26,7 +26,10 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -110,5 +113,11 @@ public class HelloWorldResource {
                 .add("beanManager", beanManager.toString())
                 .add("logger", logger.getName())
                 .build();
+    }
+
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    public String saveNewToDoItem(@NotNull @Valid final NewToDoItem newToDoItem) {
+        return newToDoItem.toString();
     }
 }
