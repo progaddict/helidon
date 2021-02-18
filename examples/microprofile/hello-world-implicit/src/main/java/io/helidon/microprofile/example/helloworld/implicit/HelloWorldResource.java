@@ -27,12 +27,15 @@ import javax.json.Json;
 import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import io.helidon.config.Config;
@@ -119,5 +122,15 @@ public class HelloWorldResource {
     @Produces(MediaType.TEXT_PLAIN)
     public String saveNewToDoItem(@NotNull @Valid final NewToDoItem newToDoItem) {
         return newToDoItem.toString();
+    }
+
+    @GET
+    @Path("test2")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String saveNewToDoItem2(
+            @QueryParam("name") @NotBlank @Size(min = 5, max = 100) final String name,
+            @QueryParam("description") @Size(min = 5, max = 1000) final String description
+    ) {
+        return name + " " + description;
     }
 }
